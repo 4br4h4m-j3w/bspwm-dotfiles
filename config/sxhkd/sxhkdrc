@@ -28,13 +28,12 @@ super + {d,x}
     {rofi -show drun,sh $HOME/bin/powermenu}
 
 # Launch Applications
-super + shift + {f,n,p,t,c,v,i,x,q,k,l}
+super + shift + {f,n,p,t,c,i,x,q,k,l}
 	{firefox, \
 	thunar, \
 	pavucontrol, \
 	telegram-desktop, \
 	code, \
-	virtualbox, \
 	firefox --private-window, \
 	sh $HOME/bin/xcolor-pick, \
 	sh $HOME/bin/bible, \
@@ -86,8 +85,8 @@ super + {t,ctrl + t,f}
 	
 
 # Change focus to next window, including floating window
-alt + {_,shift + }Tab
-    bspc node -f {next.local,prev.local}
+alt + Tab
+    bspc node -f next.local
  
 #
 # focus/swap
