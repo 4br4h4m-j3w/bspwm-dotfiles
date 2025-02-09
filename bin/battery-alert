@@ -16,7 +16,7 @@ while true; do
     status=$(cat $battery/status)
 
     # If battery full and not already warned about that
-    if [ $capacity -ge $full ] && ["$status" = "Charging"]; then
+    if [ $capacity -ge $full ] && [ "$status" = "Charging" ]; then
       notify-send "Battery is full"
       aplay $fullChargeSound &
     fi
