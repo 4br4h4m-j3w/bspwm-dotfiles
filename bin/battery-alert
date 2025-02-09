@@ -1,9 +1,10 @@
 #!/bin/sh
 
-# Possible values: NONE, FULL, LOW, CRITICAL
-last="NONE"
-critical=10
-low=25
+low=10
+full=95
+
+lowChargeSound="/home/belakor/SystemSounds/low-charge.wav"
+fullChargeSound="/home/belakor/SystemSounds/full-charge.wav"
 
 while true; do
 
@@ -15,24 +16,16 @@ while true; do
     status=$(cat $battery/status)
 
     # If battery full and not already warned about that
-    if [ "$last" != "FULL" ] && [ "$status" = "Full" ]; then
-      notify-send "Battery full"
-      last="FULL"
+    if [ $capacity -ge $full ] && ["$status" = "Charging"]; then
+      notify-send "Battery is full"
+      aplay $fullChargeSound &
     fi
 
     # If low and discharging
-    if [ "$last" != "LOW" ] && [ "$last" != "CRITICAL" ]  && \
-       [ "$status" = "Discharging" ] && [ $capacity -le $low ]; then
+    if [ "$status" = "Discharging" ] && [ $capacity -le $low ]; then
       notify-send "Battery low: $capacity%"
-      last="LOW"
+      aplay $lowChargeSound &
 	fi
-
-	# If critical level and discharging
-	if [ "$last" = "LOW" ] && [ "$status" = "Discharging" ] && \
-	   [ $capacity -le $critical ]; then
-	  notify-send "Battery critical: $capacity%"
-      last="CRITICAL"
-    fi
   fi
   sleep 60
 
